@@ -1,10 +1,13 @@
 import { menuItems } from "./data/db"
 import MenuItem from "./components/MenuItem"
 import useOrder from "./hooks/useOrder"
+import OrderTotal from "./components/OrderTotal"
+import OrderContents from "./components/OrderContents"
+import TipPercentageForm from "./components/TipPercentageForm"
 
 function App() {
 
-  const { addItem } = useOrder()
+  const { order, tip, setTip, addItem, removeItem, placeOrder } = useOrder()
   
   return (
     <>
@@ -29,8 +32,31 @@ function App() {
          
         </div>
 
-        <div>
-          <h2>Consumo</h2>
+        <div className="border border-dashed border-slate-300 p-5 rounded-lg space-y-10">
+          {OrderContents.length > 0 ?(
+            <>
+              <OrderContents 
+                order={order}
+                removeItem={removeItem}
+              />
+              <TipPercentageForm 
+                setTip={setTip}
+                tip={tip}
+              />
+              <OrderTotal
+                order={order}
+                tip={tip}
+                placeOrder={placeOrder}
+              />
+            </>
+     
+
+
+          ): (
+            <p className="text-center">La orden está vacía</p>
+          ) }
+        
+      
         </div>
         
       </main>
